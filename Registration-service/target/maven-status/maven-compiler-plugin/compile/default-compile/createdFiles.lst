@@ -1,0 +1,10 @@
+com\vistudiyo\registration\RegistrationService.class
+com\vistudiyo\registration\service\RegisterService.class
+com\vistudiyo\registration\entity\Editors.class
+com\vistudiyo\registration\dtos\CustomerResponseDto.class
+com\vistudiyo\registration\dtos\RegisterRequestDTO.class
+com\vistudiyo\registration\dtos\UpdateCustomerDto.class
+com\vistudiyo\registration\mapper\UpdateUserMapperImpl.class
+com\vistudiyo\registration\mapper\UpdateUserMapper.class
+com\vistudiyo\registration\repository\RegisterRepo.class
+com\vistudiyo\registration\controller\RegistrationController.class
