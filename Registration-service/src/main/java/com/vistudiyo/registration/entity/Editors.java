@@ -26,10 +26,8 @@ public class Editors {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false,unique = true,updatable = false)
+    @Column(nullable = false,unique = true)
     private String userName;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+
 }
