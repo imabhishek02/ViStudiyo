@@ -4,6 +4,7 @@ import com.vistudiyo.registration.dtos.CustomerResponseDto;
 import com.vistudiyo.registration.dtos.RegisterRequestDTO;
 import com.vistudiyo.registration.dtos.UpdateCustomerDto;
 import com.vistudiyo.registration.entity.Editors;
+import com.vistudiyo.registration.exception.UserAlreadyExist;
 import com.vistudiyo.registration.mapper.UpdateUserMapper;
 import com.vistudiyo.registration.repository.RegisterRepo;
 import jakarta.validation.Valid;
@@ -30,8 +31,12 @@ public class RegisterService {
     ModelMapper mapper = new ModelMapper();
 
     public void registerEntity(@Valid RegisterRequestDTO request) {
-        Editors obj = mapper.map(request,Editors.class);
-        registerRepo.save(obj);
+        if(registerRepo.findByUsername(request.getUserName()).isPresent()){
+            throw new UserAlreadyExist("Username already exist");
+        }else {
+            Editors obj = mapper.map(request, Editors.class);
+            registerRepo.save(obj);
+        }
     }
 
     public CustomerResponseDto findByID(UUID id) {
