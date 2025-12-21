@@ -44,4 +44,10 @@ public class RegistrationController {
         registerService.updateUser(id,updateUserDetails);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable UUID id){
+        registerService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully Deleted");
+    }
 }

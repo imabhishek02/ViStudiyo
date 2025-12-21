@@ -57,5 +57,9 @@ public class RegisterService {
     }
 
 
+    public void deleteUser(UUID id) {
+        Editors obj = registerRepo.findById(id).orElseThrow(()->new RuntimeException("No such id"));
+        registerRepo.delete(obj);
 
+    }
 }
