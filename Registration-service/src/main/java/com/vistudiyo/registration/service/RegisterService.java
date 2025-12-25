@@ -4,7 +4,9 @@ import com.vistudiyo.registration.dtos.CustomerResponseDto;
 import com.vistudiyo.registration.dtos.RegisterRequestDTO;
 import com.vistudiyo.registration.dtos.UpdateCustomerDto;
 import com.vistudiyo.registration.entity.Editors;
-import com.vistudiyo.registration.exception.UserAlreadyExist;
+import com.vistudiyo.registration.exception.EmailAlreadyExist;
+import com.vistudiyo.registration.exception.InvalidIDException;
+import com.vistudiyo.registration.exception.UserNameAlreadyExist;
 import com.vistudiyo.registration.mapper.UpdateUserMapper;
 import com.vistudiyo.registration.repository.RegisterRepo;
 import jakarta.validation.Valid;
@@ -32,15 +34,16 @@ public class RegisterService {
 
     public void registerEntity(@Valid RegisterRequestDTO request) {
         if(registerRepo.findByUsername(request.getUserName()).isPresent()){
-            throw new UserAlreadyExist("Username already exist");
-        }else {
+            throw new UserNameAlreadyExist("Username already exist");
+        }if(registerRepo.findByEmail(request.getEmail()).isPresent()){
+            throw new EmailAlreadyExist("Email Already Exists");
+        }
             Editors obj = mapper.map(request, Editors.class);
             registerRepo.save(obj);
-        }
     }
 
     public CustomerResponseDto findByID(UUID id) {
-       Optional<Editors> editor =  registerRepo.findById(id);
+       Editors editor =  registerRepo.findById(id).orElseThrow(()->new InvalidIDException("Id doesn't exist"));
        CustomerResponseDto obj = mapper.map(editor,CustomerResponseDto.class);
        return obj;
     }
@@ -54,9 +57,7 @@ public class RegisterService {
     }
 
     public void updateUser(UUID id, UpdateCustomerDto updateUserDetails) {
-        Editors editor = registerRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Please enter valid id"));
-
+        Editors editor = registerRepo.findById(id).orElseThrow(()->new InvalidIDException("Id doesn't exist"));
         updateUserMapper.updateUserFromDto(updateUserDetails,editor);
         registerRepo.save(editor);
     }
