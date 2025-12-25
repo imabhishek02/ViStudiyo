@@ -12,28 +12,18 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionalHandler {
 
-    @ExceptionHandler(UserNameAlreadyExist.class)
-    public ResponseEntity<String> handleUserAreadyExist(UserNameAlreadyExist ex){
+    @ExceptionHandler({
+            UserNameAlreadyExist.class,
+            EmailAlreadyExist.class,
+            InvalidIDException.class,
+            InValidPasswordEx.class,
+            InValidUsernameEx.class
+    })
+    public ResponseEntity<String> handleBussinessExcetion(RuntimeException ex){
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
-
-    @ExceptionHandler(EmailAlreadyExist.class)
-    public ResponseEntity<String> handleEmailAlreadyExist(EmailAlreadyExist ex){
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
-
-    @ExceptionHandler(InvalidIDException.class)
-    public ResponseEntity<String> handleInvalidID(InvalidIDException ex){
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
-
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>>  handleValidationError(MethodArgumentNotValidException ex){
         Map<String,String> errors = new HashMap<>();

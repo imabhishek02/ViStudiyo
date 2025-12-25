@@ -1,7 +1,9 @@
 package com.vistudiyo.registration.dtos;
 
 import jakarta.persistence.Column;
+import jakarta.validation.Valid;
 import lombok.Data;
+
 
 @Data
 public class UpdateCustomerDto {

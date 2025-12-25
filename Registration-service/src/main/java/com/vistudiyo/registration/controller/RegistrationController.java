@@ -40,7 +40,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/updateUser/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable UUID id, @RequestBody UpdateCustomerDto updateUserDetails){
+    public ResponseEntity<String> updateUser(@Valid @PathVariable UUID id, @RequestBody UpdateCustomerDto updateUserDetails){
         registerService.updateUser(id,updateUserDetails);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
